@@ -1,26 +1,23 @@
 package com.geog.Controlller;
 
-import java.sql.*;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.faces.bean.*;
-import javax.naming.*;
-import javax.sql.*;
 
 import com.geog.DAO.CountryDAO;
 import com.geog.Model.Country;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class CountryController {
 	//@EJB
 	//The country data source Object
 	private CountryDAO dao;
 	//The full list of countries
 	private List<Country> countryList;
+	//Form message
+	private String message;
 	
 	@PostConstruct
 	/**
@@ -40,4 +37,28 @@ public class CountryController {
 	public List<Country> getCountryList() {
 		return this.countryList;
 	}
+	
+	/**
+	 * Function used to add a country to the database
+	 * @param Country - Country to add to database
+	 * @return boolean
+	 */
+	public void addCountry(Country country) {
+		System.out.println("called "+country.getCode());
+		//Delegate to dao
+		if(this.dao.insert(country)) {
+			this.message="<span class='success'>The Country was added.</span>";
+		}else {
+			this.message="<span class='error'>Error - This id already exists.</span>";
+		}
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+	
+	public void clearMessage() {
+		this.message="";
+	}
+	
 }

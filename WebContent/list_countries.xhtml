@@ -11,15 +11,18 @@
 <h:body>
 	<ui:composition template="layout.xhtml">
 		<ui:define name="content">
+			<div id="adddialog" title="Add Country"></div>
 			<div class="panel panel-primary">
-				<div class="panel-heading"><h2>Countries</h2></div>
+				<div class="panel-heading">
+					<h2>Countries</h2>
+				</div>
 				<div class="panel-body">
-					<h:link value="Add Country" outcome="add_cuntry_page"
-						styleClass="btn btn-default btn-block" />
-						<p></p>
+					<h:link value="Add Country" outcome="#"
+						styleClass="btn btn-default btn-block" id="addcountrybutton" />
+					<p></p>
 					<h:dataTable value="#{countryController.countryList}" var="country"
 						styleClass="table table-striped table-bordered"
-						headerClass="thead-inverse" rowClasses="">
+						headerClass="thead-inverse" rowClasses="" id="countrytable">
 						<h:column>
 							<f:facet name="header">Country Code</f:facet>
 							#{country.code}
@@ -40,8 +43,7 @@
 			</div>
 		</ui:define>
 		<ui:define name="navbutton">
-			<h:link value="Home" outcome="index"
-						styleClass="btn btn-default" />
+			<h:link value="Home" outcome="index" styleClass="btn btn-default" />
 		</ui:define>
 	</ui:composition>
 </h:body>

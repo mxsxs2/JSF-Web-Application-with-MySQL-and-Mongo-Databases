@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public abstract class DAOFactory {
+public abstract class DAOFactory<E>  implements DAOInterface<E>{
 	// resource injection
 	// @Resource(name="jdbc/geography")
 	private static DataSource ds;

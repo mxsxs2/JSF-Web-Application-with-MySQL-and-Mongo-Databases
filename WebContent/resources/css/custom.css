@@ -24,3 +24,28 @@ body{
 #indexpanel{
 	background-color: rgba(245, 245, 245, 0.4);
 }
+
+.ajaxResponseMessage{
+	display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px;
+    font-weight:bold;
+    color:green;
+}
+.ajaxResponseMessage > .error{
+	color:red;
+}
+
+#addform table{
+	margin-bottom:5px;
+}
+
+#addform td{
+	vertical-align:middle;
+}
+
+#addform td label{
+	margin-bottom:0px;
+	margin-right:5px;;
+}
