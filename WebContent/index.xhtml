@@ -1,22 +1,36 @@
 <!DOCTYPE html>
-<html lang="en"
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-	
+
 <h:head>
 	<title>Geography DB</title>
 </h:head>
 <h:body>
-	<h:link value="Countries" outcome="list_countries"/>
-	<br/>
-	<h:link value="Regions" outcome="list_countries"/>
-	<br/>
-	<h:link value="Cities" outcome="list_countries"/>
-	<br/>
-	<h:link value="Heads of State" outcome="list_countries"/>
-	<br/>
-	<h:link value="Find cities" outcome="list_countries"/>
+	<ui:composition template="layout.xhtml">
+		<ui:define name="content">
+			<h2>Data Centric Rad Project By Krisztian Nagy</h2>
+			<div class="panel panel-default" id="indexpanel">
+				<div class="panel-body">
+					<h:link value="Countries" outcome="list_countries"
+						styleClass="btn btn-default btn-block" />
+					<br />
+					<h:link value="Regions" outcome="list_countries"
+						styleClass="btn btn-default btn-block" />
+					<br />
+					<h:link value="Cities" outcome="list_countries"
+						styleClass="btn btn-default btn-block" />
+					<br />
+					<h:link value="Heads of State" outcome="list_countries"
+						styleClass="btn btn-default btn-block" />
+					<br />
+					<h:link value="Find cities" outcome="list_countries"
+						styleClass="btn btn-default btn-block" />
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
 

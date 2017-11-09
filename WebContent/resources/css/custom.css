@@ -1,0 +1,26 @@
+body{
+	background-image:url(#{request.contextPath}/resources/images/google_earth_bg.jpg);
+}
+
+#page{
+	min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  	min-height: 100vh; /* These two lines are counted as one :-)       */
+  	display: flex;
+  	align-items: center;
+}
+.maincontainer{
+	min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  	min-height: 100vh; /* These two lines are counted as one :-)       */
+  	display: flex;
+  	align-items: center;
+	background-color: rgba(245, 245, 245, 0.4);
+	margin:auto;
+}
+
+.panel{
+	margin-top:20px;
+}
+
+#indexpanel{
+	background-color: rgba(245, 245, 245, 0.4);
+}
