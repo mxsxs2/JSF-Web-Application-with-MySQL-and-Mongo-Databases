@@ -1,9 +1,13 @@
 package com.geog.Model;
 
-public class Country {
+import javax.faces.bean.*;
+
+@ManagedBean
+@RequestScoped
+public class Country implements java.io.Serializable{
 	private String code;
 	private String name;
-	private String varchar;
+	private String details;
 	
 	
 	
@@ -15,7 +19,7 @@ public class Country {
 		super();
 		this.code = code;
 		this.name = name;
-		this.varchar = varchar;
+		this.details = varchar;
 	}
 
 	public String getCode() {
@@ -34,11 +38,11 @@ public class Country {
 		this.name = name;
 	}
 
-	public String getVarchar() {
-		return varchar;
+	public String getDetails() {
+		return details;
 	}
 
-	public void setVarchar(String varchar) {
-		this.varchar = varchar;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 }
