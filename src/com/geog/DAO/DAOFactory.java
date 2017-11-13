@@ -18,7 +18,6 @@ public abstract class DAOFactory<E>  implements DAOInterface<E>{
 	 */	
 	public DAOFactory() {
 		super();
-		System.out.println("initcalled");
 		// dependency/property injection).
 		try {
 			Context ctx = new InitialContext();
@@ -42,5 +41,4 @@ public abstract class DAOFactory<E>  implements DAOInterface<E>{
 			}
 		  return null;
 	}
-
 }

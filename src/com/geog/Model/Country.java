@@ -2,9 +2,12 @@ package com.geog.Model;
 
 import javax.faces.bean.*;
 
+
 @ManagedBean
 @RequestScoped
 public class Country implements java.io.Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String code;
 	private String name;
 	private String details;
@@ -44,5 +47,17 @@ public class Country implements java.io.Serializable{
 
 	public void setDetails(String details) {
 		this.details = details;
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		//Check if object is null or instance of country.
+		//isInstance checks if the object is null. 
+		if(this.getClass().isInstance(object)){
+			//Compare the codes of the country
+			return this.code==this.getClass().cast(object).getCode();
+		}
+		//Return false it is not the same
+		return false;
 	}
 }

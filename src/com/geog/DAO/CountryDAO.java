@@ -68,7 +68,7 @@ public class CountryDAO extends DAOFactory<Country> {
 	}
 
 	@Override
-	public boolean Update(Country object) {
+	public boolean update(Country object) {
 		// Check if the Object is the right type
 		if (object != null && object instanceof Country) {
 			// Cast the object
@@ -91,7 +91,7 @@ public class CountryDAO extends DAOFactory<Country> {
 	}
 
 	@Override
-	public boolean Delete(Country object) {
+	public boolean delete(Country object) {
 		// Check if the Object is the right type
 		if (object != null && object instanceof Country) {
 			// Cast the object
@@ -104,7 +104,8 @@ public class CountryDAO extends DAOFactory<Country> {
 				// Run the update and return the result
 				return 1 == ps.executeUpdate();
 			} catch (SQLException e) {
-
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		// Return null if there was no result

@@ -7,7 +7,7 @@ import java.util.*;
  * @author user
  *
  */
-public interface DAOInterface<E> {
+public interface DAOInterface<E>{
 
 	/**
 	 * Method used to find an row in the database by its primary key
@@ -27,13 +27,13 @@ public interface DAOInterface<E> {
 	 * @param Object - Object to update
 	 * @return boolean - Whether the update was successful or not
 	 */
-	public boolean Update(E object);
+	public boolean update(E object);
 	/**
 	 * Method used to delete a row from the database by an object
 	 * @param Object - Object to delete
 	 * @return boolean - Whether the delete was successful or not
 	 */
-	public boolean Delete(E object);
+	public boolean delete(E object);
 	
 	/**
 	 * Method used to insert a row from the database by an object
@@ -41,5 +41,4 @@ public interface DAOInterface<E> {
 	 * @return boolean - Whether the insert was successful or not
 	 */
 	public boolean insert(E object);
-	
 }

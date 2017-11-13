@@ -25,7 +25,7 @@ body{
 	background-color: rgba(245, 245, 245, 0.4);
 }
 
-.ajaxResponseMessage{
+.ajaxResponseMessage,.responseMessage{
 	display: inline-block;
     width: 100%;
     text-align: center;
@@ -33,7 +33,7 @@ body{
     font-weight:bold;
     color:green;
 }
-.ajaxResponseMessage > .error{
+.ajaxResponseMessage > .error,.responseMessage > .error{
 	color:red;
 }
 
@@ -48,4 +48,8 @@ body{
 #addform td label{
 	margin-bottom:0px;
 	margin-right:5px;;
+}
+
+#dialog{
+	display:none;
 }

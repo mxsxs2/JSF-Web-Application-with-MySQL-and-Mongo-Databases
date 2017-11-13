@@ -1,25 +1,27 @@
 package com.geog.Model;
 
 public class HeadOfState {
-	private String id;
+	private String code;
 	private String headOfState;
 	
 	public HeadOfState() {
 		super();
 	}
 
-	public HeadOfState(String id, String headOfState) {
+	public HeadOfState(String code, String headOfState) {
 		super();
-		this.id = id;
+		this.code = code;
 		this.headOfState = headOfState;
 	}
 
-	public String getId() {
-		return id;
+	
+
+	public String getCode() {
+		return code;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getHeadOfState() {

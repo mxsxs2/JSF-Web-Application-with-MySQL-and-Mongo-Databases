@@ -11,12 +11,16 @@
 <h:body>
 	<ui:composition template="layout.xhtml">
 		<ui:define name="content">
-			<div id="adddialog" title="Add Country"></div>
+			<div id="dialog"></div>
+
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h2>Countries</h2>
 				</div>
 				<div class="panel-body">
+					<h:outputText value="#{countryController.message}"
+						class="responseMessage" escape="false" />
+					#{countryController.clearMessage()}
 					<h:link value="Add Country" outcome="#"
 						styleClass="btn btn-default btn-block" id="addcountrybutton" />
 					<p></p>
@@ -37,6 +41,16 @@
         				</h:column>
 						<h:column>
 							<f:facet name="header">Action</f:facet>
+							<h:form id="addform">
+								<h:link value="Update" outcome="#"
+									styleClass="btn btn-default btn-block updatecountrybutton"
+									id="updatedeletecountrybutton" accesskey="#{country.code}" />
+								<h:commandLink value="Delete"
+									action="#{countryController.deleteCountry(country)}"
+									class="btn btn-danger btn-block deletecountrybutton"
+									accesskey="#{country.code}">
+								</h:commandLink>
+							</h:form>
 						</h:column>
 					</h:dataTable>
 				</div>
