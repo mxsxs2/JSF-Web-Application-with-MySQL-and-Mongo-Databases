@@ -12,6 +12,8 @@ public abstract class DAOFactory<E>  implements DAOInterface<E>{
 	// resource injection
 	// @Resource(name="jdbc/geography")
 	private static DataSource ds;
+	//The database connection
+	private Connection connection;
 
 	/**
 	 * Constructor used to initialise the DAO factory. It loads the jdbc data source.
@@ -22,6 +24,7 @@ public abstract class DAOFactory<E>  implements DAOInterface<E>{
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/geography");
+			this.loadConnection();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -33,12 +36,31 @@ public abstract class DAOFactory<E>  implements DAOInterface<E>{
 	 * Method used to return a database connection
 	 * @return Connection - mysql database connection
 	 */
-	protected static Connection getConnetion() {
-		  try {
-				return ds.getConnection();
+	protected Connection getConnetion() {
+		 return this.connection;
+	}
+	
+	/**
+	 * Method used to open a connection to the database
+	 */
+	private void loadConnection() {
+		 try {	
+			 	//Get the connection from the database source
+				this.connection=ds.getConnection();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		  return null;
+	}
+	/**
+	 * Method used to close the database connection when the class is done
+	 */
+	public void closeConnection() {
+	    try {
+			this.connection.close();
+			System.out.println("connection closed");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

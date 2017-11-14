@@ -16,7 +16,21 @@ $(document).ready(function() {
 	            width: 'auto'}).dialog('open');
 		})
 	})
-	
+
+	// Add add country button listener
+	$('body').on('click', '.updatecountrybutton', function() {
+		//Load the content of add_country.xhtml into a hidden container
+		$("#dialog").load('update_country.xhtml?code='+$(this).attr("accesskey"),function(){
+			//When the loading finished convert the container into a dialog box and show it
+			$("#dialog").dialog({
+				title: "Update Country",
+				autoOpen: false,
+	            resizable: false,
+	            modal: true,
+	            fluid: true,
+	            width: 'auto'}).dialog('open');
+		})
+	})
 	
 	//Get every delete button
 	$('.deletecountrybutton').each(function(){
@@ -62,6 +76,7 @@ $(document).ready(function() {
 	$("body").on("dialogclose", "#dialog",function() {
 		 //Reset the dialog
 	     $( this ).dialog( "destroy" );
+	     $( this ).html("");
 	} );
 });
 

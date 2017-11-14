@@ -3,7 +3,11 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+	
+<!--Pre-load the countrylist on pageload-->
+<f:metadata>
+    <f:viewAction action="#{countryController.loadCountryList}" />
+</f:metadata>
 <h:head>
 	<title>Country List</title>
 
@@ -12,7 +16,6 @@
 	<ui:composition template="layout.xhtml">
 		<ui:define name="content">
 			<div id="dialog"></div>
-
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h2>Countries</h2>
@@ -20,9 +23,9 @@
 				<div class="panel-body">
 					<h:outputText value="#{countryController.message}"
 						class="responseMessage" escape="false" />
-					#{countryController.clearMessage()}
-					<h:link value="Add Country" outcome="#"
-						styleClass="btn btn-default btn-block" id="addcountrybutton" />
+					#{countryController.clearMessage()} <span
+						class="btn btn-default btn-block"
+						id="addcountrybutton">Add Country</span>
 					<p></p>
 					<h:dataTable value="#{countryController.countryList}" var="country"
 						styleClass="table table-striped table-bordered"
@@ -41,10 +44,9 @@
         				</h:column>
 						<h:column>
 							<f:facet name="header">Action</f:facet>
-							<h:form id="addform">
-								<h:link value="Update" outcome="#"
-									styleClass="btn btn-default btn-block updatecountrybutton"
-									id="updatedeletecountrybutton" accesskey="#{country.code}" />
+							<h:form id="countryActionForm">
+								<span class="btn btn-default btn-block updatecountrybutton"
+									id="updatedeletecountrybutton" accesskey="#{country.code}">Update</span>
 								<h:commandLink value="Delete"
 									action="#{countryController.deleteCountry(country)}"
 									class="btn btn-danger btn-block deletecountrybutton"

@@ -8,6 +8,6 @@
             username="root" 
             password="user" 
             driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/geography"/>
+            url="jdbc:mysql://localhost:3306/geography?useSSL=false"/>
 
 </Context>

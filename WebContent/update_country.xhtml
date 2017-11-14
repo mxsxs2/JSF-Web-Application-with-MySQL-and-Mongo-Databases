@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<!--Pre-load the country-->
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{countryController.loadCountry(param['code'])}" />
+</f:metadata>
+<h:head>
+	<title>Update Country</title>
+	#{countryController.clearMessage()}
+</h:head>
+<h:body>
+	<h:form id="addform">
+		<h:outputText value="#{countryController.message}"
+			class="ajaxResponseMessage" escape="false" />
+		<h:panelGrid columns="2">
+			<h:outputLabel for="code">Code:</h:outputLabel>
+			<h:inputText value="#{countryController.country.code}" id="code"
+				required="true" requiredMessage="Code is required" p:maxlength="3"
+				readonly="true"></h:inputText>
+			<h:message id="m1" for="code" style="color:red" />
+			<p></p>
+			<h:outputLabel for="name">Name:</h:outputLabel>
+			<h:inputText value="#{countryController.country.name}" id="name"
+				required="true" requiredMessage="Name is required" p:maxlength="200"></h:inputText>
+			<h:message id="m2" for="name" style="color:red" />
+			<p></p>
+			<h:outputLabel for="details">Details:</h:outputLabel>
+			<h:inputText value="#{countryController.country.details}"
+				id="details" p:maxlength="400"></h:inputText>
+		</h:panelGrid>
+		<!--Button to update the country. Sends through ajax sets param['code'] again-->
+		<h:commandButton
+			action="#{countryController.updateCountry(countryController.country)}"
+			value="Add" styleClass="btn btn-default btn-block">
+			<f:ajax execute="@form" render="@form" onevent="checkResponse" />
+			<f:param name="code" value="#{countryController.country.code}" />
+		</h:commandButton>
+	</h:form>
+</h:body>
+</html>

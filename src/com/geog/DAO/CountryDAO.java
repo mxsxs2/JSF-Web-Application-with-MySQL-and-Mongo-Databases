@@ -3,6 +3,8 @@ package com.geog.DAO;
 import java.sql.*;
 import java.util.*;
 
+import javax.annotation.PreDestroy;
+
 import com.geog.Model.Country;
 
 public class CountryDAO extends DAOFactory<Country> {
@@ -61,7 +63,8 @@ public class CountryDAO extends DAOFactory<Country> {
 				return country;
 			}
 		} catch (SQLException e) {
-
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		// Return null if there was no result
 		return null;
@@ -77,13 +80,14 @@ public class CountryDAO extends DAOFactory<Country> {
 			try (PreparedStatement ps = getConnetion().prepareStatement(UPDATE_ONE)) {
 				// Set the details
 				ps.setString(1, country.getName());
-				ps.setString(2, country.getDetails());
+				ps.setString(2, country.getDetails()==null ? "": country.getDetails()); //Make sure the details is not null
 				ps.setString(3, country.getCode());
 
 				// Run the update and return the result
 				return 1 == ps.executeUpdate();
 			} catch (SQLException e) {
-
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		// Return null if there was no result
@@ -123,10 +127,10 @@ public class CountryDAO extends DAOFactory<Country> {
 				// Set the details
 				ps.setString(1, country.getCode());
 				ps.setString(2, country.getName());
-				ps.setString(3, country.getDetails());
+				ps.setString(3, country.getDetails()==null ? "": country.getDetails()); //Make sure the details is not null
 				// Run the update and return the result
 				return 1 == ps.executeUpdate();
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -136,4 +140,8 @@ public class CountryDAO extends DAOFactory<Country> {
 		return false;
 	}
 
+	@PreDestroy
+	public void closeConnections() {
+		this.closeConnection();
+	}
 }
