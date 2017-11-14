@@ -3,10 +3,15 @@ $(document).ready(function() {
 	$('table').DataTable();
 	
 	
-	// Add add country button listener
+	// Add add region button listener
 	$('body').on('click', '#addregionbutton', function() {
 		//load the dialog content and open it
 		openDialog("Add Region","add_region.xhtml");
+	})
+	// Add add city button listener
+	$('body').on('click', '#addcitybutton', function() {
+		//load the dialog content and open it
+		openDialog("Add City","add_city.xhtml");
 	})
 	
 	// Add add country button listener

@@ -138,7 +138,7 @@ public class CityDAO extends DAOFactory<City> {
 			ps.setString(3, City.getCode());
 			ps.setString(4, City.getName());
 			ps.setInt(5, City.getPopulation()<0 ? 0 : City.getPopulation());
-			ps.setBoolean(6, City.isCoastal());
+			ps.setString(6, String.valueOf(City.isCoastal()));
 			ps.setFloat(7, City.getAreaKM() <0 ? 0 : City.getAreaKM()); // Make sure the details is not null
 			// Run the update and return the result
 			return 1 == ps.executeUpdate();

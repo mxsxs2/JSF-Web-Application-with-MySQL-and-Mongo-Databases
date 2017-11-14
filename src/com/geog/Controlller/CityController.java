@@ -72,6 +72,7 @@ public class CityController {
 			this.message = "<span class='error'>Error -  " + City.getRegionCode() + " in " + City.getCountryCode()
 					+ " does not exists.</span>";
 		} catch (SQLException e) {
+			e.printStackTrace();
 			// Set the fail message if this City already exists
 			this.message = "<span class='error'>Error - " + City.getRegionCode() + "," + City.getCode() + " in "
 					+ City.getCountryCode() + " already exists.</span>";

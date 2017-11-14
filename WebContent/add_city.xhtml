@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>Add City</title>
+	#{cityController.clearMessage()}
+</h:head>
+<h:body>
+	<h:form id="addcityform">
+		<h:outputText value="#{cityController.message}"
+			class="ajaxResponseMessage" escape="false" />
+		<h:panelGrid columns="2">
+			<h:outputLabel for="citycode">City Code:</h:outputLabel>
+			<h:inputText value="#{city.code}" id="citycode" required="true"
+				requiredMessage="Code is required" p:maxlength="3"></h:inputText>
+			<h:message id="m0" for="citycode" style="color:red" />
+			<p></p>
+			<h:outputLabel for="countrycode">Country Code:</h:outputLabel>
+			<h:inputText value="#{city.countryCode}" id="countrycode"
+				required="true" requiredMessage="Country Code is required"
+				p:maxlength="3"></h:inputText>
+			<h:message id="m1" for="countrycode" style="color:red" />
+			<p></p>
+			<h:outputLabel for="regioncode">Region Code:</h:outputLabel>
+			<h:inputText value="#{city.regionCode}" id="regioncode"
+				required="true" requiredMessage="Region Code is required"
+				p:maxlength="3"></h:inputText>
+			<h:message id="m2" for="regioncode" style="color:red" />
+			<p></p>
+			<h:outputLabel for="name">Name:</h:outputLabel>
+			<h:inputText value="#{city.name}" id="name" required="true"
+				requiredMessage="Name is required" p:maxlength="200"></h:inputText>
+			<h:message id="m3" for="name" style="color:red" />
+			<p></p>
+			<h:outputLabel for="population">Population:</h:outputLabel>
+			<h:inputText value="#{city.population}" id="population"
+				p:maxlength="10"></h:inputText>
+			<h:outputLabel for="coastal">By The Sea:</h:outputLabel>
+			<h:selectOneMenu value="#{city.coastal}" id="coastal">
+				<f:selectItem itemValue="true"
+					itemLabel="True" />
+				<f:selectItem itemValue="false"
+					itemLabel="False" />
+			</h:selectOneMenu>
+			<h:outputLabel for="areakm">Area(KM):</h:outputLabel>
+			<h:inputText value="#{city.areaKM}" id="areakm" p:maxlength="20"></h:inputText>
+		</h:panelGrid>
+		<h:commandButton action="#{cityController.addCity(city)}" value="Add"
+			styleClass="btn btn-default btn-block">
+			<f:ajax execute="@form" render="addcityform" onevent="checkResponse" />
+		</h:commandButton>
+	</h:form>
+</h:body>
+</html>
