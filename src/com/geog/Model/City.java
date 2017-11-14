@@ -1,6 +1,13 @@
 package com.geog.Model;
 
-public class City {
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
+public class City  implements java.io.Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String code;
 	private String countryCode;
 	private String regionCode;
