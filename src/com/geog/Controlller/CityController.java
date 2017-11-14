@@ -134,8 +134,7 @@ public class CityController {
 		// Get the City
 		City City = this.dao.find(code);
 		// Return the City if it is not null
-		if (City != null)
-			return City;
+		if (City != null) return City;
 		this.message = "<span class='error'>Error - Counld not find " + code + ".</span>";
 		// Return an empty City if it was not found
 		return new City("", "", "", "", 0, false, (float) 0);

@@ -8,7 +8,11 @@ import com.geog.Model.City;
 public class CityDAO extends DAOFactory<City> {
 	// SQL Statements
 	private static final String SELECT_ALL = "SELECT `co_code`,`reg_code`,`cty_code`,`cty_name`,`population`,`isCoastal`,`areaKM` FROM `City`";
-	private static final String SELECT_ONE = "SELECT `co_code`,`reg_code`,`cty_code`,`cty_name`,`population`,`isCoastal`,`areaKM` FROM `City` WHERE `cty_code` = ? LIMIT 1";
+	private static final String SELECT_ONE = "SELECT `co_name` as `co_code`,`reg_name` as `reg_code`,`cty_code`,`cty_name`,`population`,`isCoastal`,`areaKM` "
+										  + " FROM `city`,`country`,`region`"
+										  + " WHERE `city`.`reg_code`=`region`.`reg_code`"
+										  + "   AND `region`.`co_code`=`country`.`co_code`"
+										  + "   AND `cty_code` = ? LIMIT 1";
 	private static final String DELETE_ONE = "DELETE FROM `City` WHERE `cty_code` = ? LIMIT 1";
 	//private static final String UPDATE_ONE = "UPDATE `City` SET `cty_name`=?, `reg_desc`=? WHERE `cty_code` = ? LIMIT 1";
 	private static final String INSERT_ONE = "INSERT `City` (`co_code`,`reg_code`,`cty_code`,`cty_name`,`population`,`isCoastal`,`areaKM`) VALUES (?,?,?,?,?,?,?)";

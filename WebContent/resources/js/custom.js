@@ -25,6 +25,11 @@ $(document).ready(function() {
 		//load the dialog content and open it
 		openDialog("Update Country","update_country.xhtml?code="+$(this).attr("accesskey"));
 	})
+	// Add add city details button listener
+	$('body').on('click', '.citydetailsbutton', function() {
+		//load the dialog content and open it
+		openDialog("City Details","city_details.xhtml?code="+$(this).attr("accesskey"));
+	})
 	
 	//Get every delete button
 	$('.deletecountrybutton').each(function(){

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<!--Pre-load the city-->
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{cityController.loadCity(param['code'])}" />
+</f:metadata>
+<h:head>
+	<title>City Details</title>
+	#{countryController.clearMessage()}
+</h:head>
+<h:body>
+		<h:outputText value="#{cityController.message}"
+			class="ajaxResponseMessage" escape="false" />
+		<h:panelGrid columns="2">
+			<h:outputLabel for="citycode">City Code:</h:outputLabel>
+			<h:outputText value="#{cityController.city.code}" id="citycode"/>
+			
+			<h:outputLabel for="name">City name:</h:outputLabel>
+			<h:outputText value="#{cityController.city.name}" id="name" />
+			
+			<h:outputLabel for="countrycode">Country:</h:outputLabel>
+			<h:outputText value="#{cityController.city.countryCode}" id="countrycode" />
+			
+			<h:outputLabel for="regioncode">Region:</h:outputLabel>
+			<h:outputText value="#{cityController.city.regionCode}" id="regioncode" />
+			
+			<h:outputLabel for="population">City Population:</h:outputLabel>
+			<h:outputText value="#{cityController.city.population}" id="population" />
+			
+			<h:outputLabel for="coastal">By The Sea:</h:outputLabel>
+			<h:outputText value="#{cityController.city.coastal}" id="coastal" />
+			
+			<h:outputLabel for="areakm">Area(KM):</h:outputLabel>
+			<h:outputText value="#{cityController.city.areaKM}" id="areakm" />
+		</h:panelGrid>
+</h:body>
+</html>
