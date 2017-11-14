@@ -8,7 +8,6 @@ import javax.faces.bean.*;
 public class Country implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1L;
-	@ManagedProperty(value="#{param.code}")
 	private String code;
 	private String name;
 	private String details;

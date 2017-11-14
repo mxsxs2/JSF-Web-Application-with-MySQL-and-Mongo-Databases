@@ -2,34 +2,23 @@ $(document).ready(function() {
 	// Turn every table into sortable table
 	$('table').DataTable();
 	
+	
+	// Add add country button listener
+	$('body').on('click', '#addregionbutton', function() {
+		//load the dialog content and open it
+		openDialog("Add Region","add_region.xhtml");
+	})
+	
 	// Add add country button listener
 	$('body').on('click', '#addcountrybutton', function() {
-		//Load the content of add_country.xhtml into a hidden container
-		$("#dialog").load('add_country.xhtml',function(){
-			//When the loading finished convert the container into a dialog box and show it
-			$("#dialog").dialog({
-				title: "Add Country",
-				autoOpen: false,
-	            resizable: false,
-	            modal: true,
-	            fluid: true,
-	            width: 'auto'}).dialog('open');
-		})
+		//load the dialog content and open it
+		openDialog("Add Country","add_country.xhtml");
 	})
 
 	// Add add country button listener
 	$('body').on('click', '.updatecountrybutton', function() {
-		//Load the content of add_country.xhtml into a hidden container
-		$("#dialog").load('update_country.xhtml?code='+$(this).attr("accesskey"),function(){
-			//When the loading finished convert the container into a dialog box and show it
-			$("#dialog").dialog({
-				title: "Update Country",
-				autoOpen: false,
-	            resizable: false,
-	            modal: true,
-	            fluid: true,
-	            width: 'auto'}).dialog('open');
-		})
+		//load the dialog content and open it
+		openDialog("Update Country","update_country.xhtml?code="+$(this).attr("accesskey"));
 	})
 	
 	//Get every delete button
@@ -71,7 +60,6 @@ $(document).ready(function() {
 	});
 	
 	
-	
 	//Add listener to the dialog close event
 	$("body").on("dialogclose", "#dialog",function() {
 		 //Reset the dialog
@@ -79,6 +67,21 @@ $(document).ready(function() {
 	     $( this ).html("");
 	} );
 });
+
+//Function used to load the dialog content and open it
+function openDialog(title,page){
+	//Load the content of add_country.xhtml into a hidden container
+	$("#dialog").load(page,function(){
+		//When the loading finished convert the container into a dialog box and show it
+		$("#dialog").dialog({
+			title: title,
+			autoOpen: false,
+            resizable: false,
+            modal: true,
+            fluid: true,
+            width: 'auto'}).dialog('open');
+	})
+}
 
 //Function used to check the jsf ajax response after from the form is sent
 function checkResponse(data){

@@ -1,5 +1,6 @@
 package com.geog.DAO;
 
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -39,6 +40,7 @@ public interface DAOInterface<E>{
 	 * Method used to insert a row from the database by an object
 	 * @param Object - Object to insert
 	 * @return boolean - Whether the insert was successful or not
+	 * @throws SQLException 
 	 */
-	public boolean insert(E object);
+	public boolean insert(E object) throws SQLException;
 }

@@ -24,7 +24,7 @@ public class CountryDAO extends DAOFactory<Country> {
 		try (PreparedStatement ps = getConnetion().prepareStatement(SELECT_ALL);) {
 			// Execute the query
 			ResultSet result = ps.executeQuery();
-			// Loop the resultset
+			// Loop the result set
 			while (result.next()) {
 				// Create a new country
 				Country country = new Country();

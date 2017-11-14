@@ -62,7 +62,7 @@ public class CountryController {
 		if (this.dao.insert(country)) {
 			this.message = "<span class='success'>The Country was added.</span>";
 		} else {
-			this.message = "<span class='error'>Error - This id already exists.</span>";
+			this.message = "<span class='error'>Error - Country code "+country.getCode()+" already exists.</span>";
 		}
 	}
 

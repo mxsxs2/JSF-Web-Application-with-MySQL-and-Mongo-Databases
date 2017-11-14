@@ -1,6 +1,12 @@
 package com.geog.Model;
 
-public class Region {
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
+public class Region implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private String countryCode;
 	private String code;
 	private String name;
