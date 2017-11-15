@@ -23,7 +23,7 @@ public class CityDAO extends DAOFactory<City> {
 		List<City> list = new ArrayList<City>();
 
 		// Try to Prepare the statement
-		try (PreparedStatement ps = getConnetion().prepareStatement(SELECT_ALL);) {
+		try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(SELECT_ALL);) {
 			// Execute the query
 			ResultSet result = ps.executeQuery();
 			// Loop the result set
@@ -52,7 +52,7 @@ public class CityDAO extends DAOFactory<City> {
 	@Override
 	public City find(String id) {
 		// Try to Prepare the statement
-		try (PreparedStatement ps = getConnetion().prepareStatement(SELECT_ONE)) {
+		try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(SELECT_ONE)) {
 			// Set the id in the statement
 			ps.setString(1, id);
 			// Get the result
@@ -113,7 +113,7 @@ public class CityDAO extends DAOFactory<City> {
 			// Cast the object
 			City City = (City) object;
 			// Try to Prepare the statement
-			try (PreparedStatement ps = getConnetion().prepareStatement(DELETE_ONE)) {
+			try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(DELETE_ONE)) {
 				// Set the details
 				ps.setString(1, City.getCode());
 
@@ -135,7 +135,7 @@ public class CityDAO extends DAOFactory<City> {
 			// Cast the object
 			City City = (City) object;
 			// Try to Prepare the statement
-			PreparedStatement ps = getConnetion().prepareStatement(INSERT_ONE);
+			PreparedStatement ps = getMYSQLConnetion().prepareStatement(INSERT_ONE);
 			// Set the details
 			ps.setString(1, City.getCountryCode());
 			ps.setString(2, City.getRegionCode());
@@ -154,6 +154,6 @@ public class CityDAO extends DAOFactory<City> {
 
 	@PreDestroy
 	public void closeConnections() {
-		this.closeConnection();
+		super.closeMYSQLConnection();
 	}
 }

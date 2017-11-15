@@ -1,5 +1,10 @@
 package com.geog.Model;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
 public class HeadOfState {
 	private String code;
 	private String headOfState;
@@ -13,8 +18,6 @@ public class HeadOfState {
 		this.code = code;
 		this.headOfState = headOfState;
 	}
-
-	
 
 	public String getCode() {
 		return code;
@@ -31,8 +34,4 @@ public class HeadOfState {
 	public void setHeadOfState(String headOfState) {
 		this.headOfState = headOfState;
 	}
-	
-	
-	
-	
 }

@@ -19,7 +19,7 @@ public class RegionDAO extends DAOFactory<Region> {
 		List<Region> list = new ArrayList<Region>();
 
 		// Try to Prepare the statement
-		try (PreparedStatement ps = getConnetion().prepareStatement(SELECT_ALL);) {
+		try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(SELECT_ALL);) {
 			// Execute the query
 			ResultSet result = ps.executeQuery();
 			// Loop the result set
@@ -45,7 +45,7 @@ public class RegionDAO extends DAOFactory<Region> {
 	@Override
 	public Region find(String id) {
 		// Try to Prepare the statement
-		try (PreparedStatement ps = getConnetion().prepareStatement(SELECT_ONE)) {
+		try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(SELECT_ONE)) {
 			// Set the id in the statement
 			ps.setString(1, id);
 			// Get the result
@@ -76,7 +76,7 @@ public class RegionDAO extends DAOFactory<Region> {
 			// Cast the object
 			Region Region = (Region) object;
 			// Try to Prepare the statement
-			try (PreparedStatement ps = getConnetion().prepareStatement(UPDATE_ONE)) {
+			try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(UPDATE_ONE)) {
 				// Set the details
 				ps.setString(1, Region.getName());
 				ps.setString(2, Region.getDescription() == null ? "" : Region.getDescription()); // Make sure the
@@ -102,7 +102,7 @@ public class RegionDAO extends DAOFactory<Region> {
 			// Cast the object
 			Region Region = (Region) object;
 			// Try to Prepare the statement
-			try (PreparedStatement ps = getConnetion().prepareStatement(DELETE_ONE)) {
+			try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(DELETE_ONE)) {
 				// Set the details
 				ps.setString(1, Region.getCode());
 
@@ -124,7 +124,7 @@ public class RegionDAO extends DAOFactory<Region> {
 			// Cast the object
 			Region Region = (Region) object;
 			// Try to Prepare the statement
-			PreparedStatement ps = getConnetion().prepareStatement(INSERT_ONE);
+			PreparedStatement ps = getMYSQLConnetion().prepareStatement(INSERT_ONE);
 			// Set the details
 			ps.setString(1, Region.getCountryCode());
 			ps.setString(2, Region.getCode());
@@ -141,6 +141,6 @@ public class RegionDAO extends DAOFactory<Region> {
 
 	@PreDestroy
 	public void closeConnections() {
-		this.closeConnection();
+		super.closeMYSQLConnection();
 	}
 }

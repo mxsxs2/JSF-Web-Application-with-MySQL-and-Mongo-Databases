@@ -21,7 +21,7 @@ public class CountryDAO extends DAOFactory<Country> {
 		List<Country> list = new ArrayList<Country>();
 
 		// Try to Prepare the statement
-		try (PreparedStatement ps = getConnetion().prepareStatement(SELECT_ALL);) {
+		try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(SELECT_ALL);) {
 			// Execute the query
 			ResultSet result = ps.executeQuery();
 			// Loop the result set
@@ -46,7 +46,7 @@ public class CountryDAO extends DAOFactory<Country> {
 	@Override
 	public Country find(String id) {
 		// Try to Prepare the statement
-		try (PreparedStatement ps = getConnetion().prepareStatement(SELECT_ONE)) {
+		try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(SELECT_ONE)) {
 			// Set the id in the statement
 			ps.setString(1, id);
 			// Get the result
@@ -77,7 +77,7 @@ public class CountryDAO extends DAOFactory<Country> {
 			// Cast the object
 			Country country = (Country) object;
 			// Try to Prepare the statement
-			try (PreparedStatement ps = getConnetion().prepareStatement(UPDATE_ONE)) {
+			try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(UPDATE_ONE)) {
 				// Set the details
 				ps.setString(1, country.getName());
 				ps.setString(2, country.getDetails()==null ? "": country.getDetails()); //Make sure the details is not null
@@ -101,7 +101,7 @@ public class CountryDAO extends DAOFactory<Country> {
 			// Cast the object
 			Country country = (Country) object;
 			// Try to Prepare the statement
-			try (PreparedStatement ps = getConnetion().prepareStatement(DELETE_ONE)) {
+			try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(DELETE_ONE)) {
 				// Set the details
 				ps.setString(1, country.getCode());
 
@@ -123,7 +123,7 @@ public class CountryDAO extends DAOFactory<Country> {
 			// Cast the object
 			Country country = (Country) object;
 			// Try to Prepare the statement
-			try (PreparedStatement ps = getConnetion().prepareStatement(INSERT_ONE)) {
+			try (PreparedStatement ps = getMYSQLConnetion().prepareStatement(INSERT_ONE)) {
 				// Set the details
 				ps.setString(1, country.getCode());
 				ps.setString(2, country.getName());
@@ -142,6 +142,6 @@ public class CountryDAO extends DAOFactory<Country> {
 
 	@PreDestroy
 	public void closeConnections() {
-		this.closeConnection();
+		super.closeMYSQLConnection();
 	}
 }

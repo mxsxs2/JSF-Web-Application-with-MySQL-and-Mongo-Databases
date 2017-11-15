@@ -9,5 +9,11 @@
             password="user" 
             driverClassName="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost:3306/geography?useSSL=false"/>
-
+<Resource name="mongodb/headsOfStateDB"
+          auth="Container"
+          type="com.mongodb.MongoClient"
+          closeMethod="close"
+          factory="com.mongodb.client.jndi.MongoClientFactory"
+          singleton="true"
+          connectionString="mongodb://localhost/headsOfStateDB"/>
 </Context>

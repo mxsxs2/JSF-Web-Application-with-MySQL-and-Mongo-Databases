@@ -1,0 +1,11 @@
+use headsOfStateDB
+db.createCollection("headsOfState")
+db.headsOfState.insert([
+        { "_id" : "USA", "headOfState" : "Donald Trump" },
+		{ "_id" : "IRL", "headOfState" : "Michael D. Higgins" },
+		{ "_id" : "FRA", "headOfState" : "Emmanuel Macron" }
+    ],
+    { ordered: true }
+)
+
+db.headsOfState.find()
