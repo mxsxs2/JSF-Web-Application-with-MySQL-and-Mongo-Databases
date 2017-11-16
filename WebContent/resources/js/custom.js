@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	// Turn every table into sortable table
-	$('table').DataTable();
+	// Turn every table(except the city search one) into sortable table
+	$("table").not(document.getElementById('citysearchtable')).DataTable();
 	
 	// Add add head of state button listener
 	setUpDialogButtonListener("Add Head Of State","add_headofstate.xhtml",'#addheadofstatebutton');
