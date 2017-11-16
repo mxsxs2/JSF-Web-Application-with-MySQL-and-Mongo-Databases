@@ -11,14 +11,12 @@ import com.geog.Model.City;
 
 @ManagedBean
 @SessionScoped
-public class CityController {
+public class CityController extends BasicController<CityDAO>{
 	// @EJB
-	// The City data source Object
-	private CityDAO dao;
+	
 	// The full list of countries
 	private List<City> CityList;
-	// Form message
-	private String message;
+	
 	// Variable for City update
 	private City City;
 
@@ -28,7 +26,7 @@ public class CityController {
 	 */
 	public void init() {
 		// Initialise the City dao
-		this.dao = new CityDAO();
+		this.setDao( new CityDAO());
 		// Load the City list
 		this.loadCityList();
 	}
@@ -38,7 +36,10 @@ public class CityController {
 	 */
 	public void loadCityList() {
 		// Load the City list
-		this.CityList = this.dao.list();
+		this.CityList = this.getDao().list();
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
+		
 	}
 
 	/**
@@ -62,20 +63,21 @@ public class CityController {
 		// Delegate to dao
 		try {
 			// Try to insert the City
-			if (this.dao.insert(City)) {
+			if (this.getDao().insert(City)) {
 				// If it was successful
-				this.message = "<span class='success'>The City was added.</span>";
+				this.setMessage( "<span class='success'>The City was added.</span>");
 			}
 
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			// Set the fail message if the country does not exists
-			this.message = "<span class='error'>Error -  " + City.getRegionCode() + " in " + City.getCountryCode()
-					+ " does not exists.</span>";
+			this.setMessage( "<span class='error'>Error -  " + City.getRegionCode() + " in " + City.getCountryCode()+ " does not exists.</span>");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			// Set the fail message if this City already exists
-			this.message = "<span class='error'>Error - " + City.getRegionCode() + "," + City.getCode() + " in "
-					+ City.getCountryCode() + " already exists.</span>";
+			this.setMessage( "<span class='error'>Error - " + City.getRegionCode() + "," + City.getCode() + " in "+ City.getCountryCode() + " already exists.</span>");
+			//Check if there was any database connection error;
+			this.getDao().setErrormessageIfConnectionLost(e);
+			this.checkDatabaseConnectionErrors();
 			return;
 		}
 
@@ -90,16 +92,18 @@ public class CityController {
 	 * @return boolean - Whether the City was deleted or not
 	 */
 	public boolean deleteCity(City City) {
-		boolean del = this.dao.delete(City);
+		boolean del = this.getDao().delete(City);
 		// Delegate to dao
 		if (del) {
-			this.message = "<span class='success'>The City was deleted.</span>";
+			this.setMessage( "<span class='success'>The City was deleted.</span>");
 			// Remove from the current list as well. No need for reloading the whole list
 			// from the db
 			this.CityList.remove(City);
 		} else {
-			this.message = "<span class='error'>Error - Counld not delete.</span>";
+			this.setMessage( "<span class='error'>Error - Counld not delete.</span>");
 		}
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		return del;
 	}
 
@@ -112,14 +116,16 @@ public class CityController {
 	 * @return boolean - Whether the City was deleted or not
 	 */
 	public boolean updateCity(City City) {
-		boolean upd = this.dao.update(City);
+		boolean upd = this.getDao().update(City);
 		// Delegate to dao
 		if (upd) {
-			this.message = "<span class='success'>The City was updated.</span>";
+			this.setMessage( "<span class='success'>The City was updated.</span>");
 			// Remove from the current list as well. No need for reloading the whole list
 		} else {
-			this.message = "<span class='error'>Error - Counld not update.</span>";
+			this.setMessage( "<span class='error'>Error - Counld not update.</span>");
 		}
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		return upd;
 	}
 
@@ -132,10 +138,12 @@ public class CityController {
 	 */
 	public City findCity(String code) {
 		// Get the City
-		City City = this.dao.find(code);
+		City City = this.getDao().find(code);
 		// Return the City if it is not null
 		if (City != null) return City;
-		this.message = "<span class='error'>Error - Counld not find " + code + ".</span>";
+		this.setMessage( "<span class='error'>Error - Counld not find " + code + ".</span>");
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		// Return an empty City if it was not found
 		return new City("", "", "", "", 0, false, (float) 0);
 	}
@@ -154,13 +162,4 @@ public class CityController {
 	public City getCity() {
 		return City;
 	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void clearMessage() {
-		this.message = "";
-	}
-
 }

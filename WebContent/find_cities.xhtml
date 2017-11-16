@@ -23,7 +23,8 @@
 				<div class="panel-body">
 					<h:form id="addcityform">
 						<h:outputText value="#{findCitiesController.message}"
-							class="ajaxResponseMessage" escape="false" />
+							class="ajaxResponseMessage" escape="false" id="errormessage"/>
+						#{findCitiesController.clearMessage()}
 						<h:panelGrid columns="2">
 							<h:panelGroup columns="1">
 								<h:outputLabel for="populationCondition">Population:</h:outputLabel>
@@ -64,7 +65,7 @@
 						<h:commandButton
 							action="#{findCitiesController.loadSearchedCityList}"
 							value="Search" styleClass="btn btn-default btn-block">
-							<f:ajax execute="@form" render="citysearchtable"
+							<f:ajax execute="@form" render="citysearchtable errormessage"
 								onevent="checkResponse" />
 						</h:commandButton>
 					</h:form>

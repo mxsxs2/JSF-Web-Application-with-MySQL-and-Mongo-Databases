@@ -23,7 +23,7 @@ public class HeadOfStateDAO extends DAOFactory<HeadOfState> {
 		super.loadMongoDBDatabase();
 		// get the collection
 		this.collection = super.getMongodatabase().getCollection("headsOfState")
-				// Get the database to throw exception on id duplication
+				// Get the database to throw exception on write error
 				.withWriteConcern(WriteConcern.ACKNOWLEDGED);
 	}
 
@@ -37,17 +37,21 @@ public class HeadOfStateDAO extends DAOFactory<HeadOfState> {
 	public List<HeadOfState> list() {
 		// Create an empty list
 		List<HeadOfState> list = new ArrayList<HeadOfState>();
-		// Get the content of the collection
-		FindIterable<Document> items = this.collection.find();
-		// Loop the items
-		for (Document d : items) {
-			// Create new head of state
-			HeadOfState hos = new HeadOfState();
-			// Set attributes
-			hos.setCode(d.getString("_id"));
-			hos.setHeadOfState(d.getString("headOfState"));
-			// Add to the list
-			list.add(hos);
+		// Check if the database is available
+		if (this.checkMongoDBConnection()) {
+
+			// Get the content of the collection
+			FindIterable<Document> items = this.collection.find();
+			// Loop the items
+			for (Document d : items) {
+				// Create new head of state
+				HeadOfState hos = new HeadOfState();
+				// Set attributes
+				hos.setCode(d.getString("_id"));
+				hos.setHeadOfState(d.getString("headOfState"));
+				// Add to the list
+				list.add(hos);
+			}
 		}
 		// Return the list
 		return list;
@@ -57,12 +61,13 @@ public class HeadOfStateDAO extends DAOFactory<HeadOfState> {
 	public boolean update(HeadOfState object) {
 		// Make sure the id is not empty
 		if (!object.getCode().isEmpty()) {
-			//Create a new document
+			// Create a new document
 			BasicDBObject newDocument = new BasicDBObject();
 			newDocument.put("headOfState", object.getHeadOfState());
-			//Create a new document to match the update on.
+			// Create a new document to match the update on.
 			BasicDBObject searchQuery = new BasicDBObject().append("_id", object.getCode());
-			//Update the document. It will replace the whole document, which is not an issue now
+			// Update the document. It will replace the whole document, which is not an
+			// issue now
 			this.collection.updateOne(searchQuery, newDocument);
 			return true;
 		}
@@ -73,9 +78,19 @@ public class HeadOfStateDAO extends DAOFactory<HeadOfState> {
 	public boolean delete(HeadOfState object) {
 		// Make sure the id is not empty
 		if (!object.getCode().isEmpty()) {
-			// Delete the one
-			this.collection.deleteOne(new BasicDBObject("_id", object.getCode()));
-			return true;
+			try {
+				// Check if the database is available
+				if (this.checkMongoDBConnection()) {
+					// Delete the one
+					this.collection.deleteOne(new BasicDBObject("_id", object.getCode()));
+					return true;
+				}
+			} catch (MongoException e) {
+				// Could not delete
+				// Check if it was a connection lost error
+				this.setErrormessageIfConnectionLost(e);
+			}
+
 		}
 
 		return false;
@@ -83,14 +98,19 @@ public class HeadOfStateDAO extends DAOFactory<HeadOfState> {
 
 	@Override
 	public boolean insert(HeadOfState object) throws MongoException {
-		// CReate a new db document
-		Document doc = new Document();
-		// Add the attributes
-		doc.append("_id", object.getCode()).append("headOfState", object.getHeadOfState());
-		// Insert to the collection. Throws exception on duplicates
-		this.collection.insertOne(doc);
-		// Return true
-		return true;
+		// Check if the database is available
+		if (this.checkMongoDBConnection()) {
+			// CReate a new db document
+			Document doc = new Document();
+			// Add the attributes
+			doc.append("_id", object.getCode()).append("headOfState", object.getHeadOfState());
+			// Insert to the collection. Throws exception on duplicates
+			this.collection.insertOne(doc);
+			// Return true
+			return true;
+		}
+
+		return false;
 	}
 
 }

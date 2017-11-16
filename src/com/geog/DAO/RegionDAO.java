@@ -35,6 +35,8 @@ public class RegionDAO extends DAOFactory<Region> {
 				list.add(Region);
 			}
 		} catch (SQLException e) {
+			//Check if it was a connection lost error
+			this.setErrormessageIfConnectionLost(e);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -62,6 +64,8 @@ public class RegionDAO extends DAOFactory<Region> {
 				return Region;
 			}
 		} catch (SQLException e) {
+			//Check if it was a connection lost error
+			this.setErrormessageIfConnectionLost(e);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -87,6 +91,8 @@ public class RegionDAO extends DAOFactory<Region> {
 				// Run the update and return the result
 				return 1 == ps.executeUpdate();
 			} catch (SQLException e) {
+				//Check if it was a connection lost error
+				this.setErrormessageIfConnectionLost(e);
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -109,6 +115,8 @@ public class RegionDAO extends DAOFactory<Region> {
 				// Run the update and return the result
 				return 1 == ps.executeUpdate();
 			} catch (SQLException e) {
+				//Check if it was a connection lost error
+				this.setErrormessageIfConnectionLost(e);
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

@@ -11,14 +11,9 @@ import com.geog.Model.Region;
 
 @ManagedBean
 @SessionScoped
-public class RegionController {
-	// @EJB
-	// The Region data source Object
-	private RegionDAO dao;
+public class RegionController extends BasicController<RegionDAO>{
 	// The full list of countries
 	private List<Region> RegionList;
-	// Form message
-	private String message;
 	// Variable for Region update
 	private Region Region;
 
@@ -28,7 +23,7 @@ public class RegionController {
 	 */
 	public void init() {
 		// Initialise the Region dao
-		this.dao = new RegionDAO();
+		this.setDao(new RegionDAO());
 		// Load the Region list
 		this.loadRegionList();
 	}
@@ -38,7 +33,9 @@ public class RegionController {
 	 */
 	public void loadRegionList() {
 		// Load the Region list
-		this.RegionList = this.dao.list();
+		this.RegionList = this.getDao().list();
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 	}
 
 	/**
@@ -62,17 +59,20 @@ public class RegionController {
 		// Delegate to dao
 		try {
 			//Try to insert the region
-			if (this.dao.insert(Region)) {
+			if (this.getDao().insert(Region)) {
 				//If it was successful
-				this.message = "<span class='success'>The Region was added.</span>";
+				this.setMessage( "<span class='success'>The Region was added.</span>");
 			}
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			//Set the fail message if the country does not exists
-			this.message = "<span class='error'>Error - Country "+Region.getCountryCode()+" does not exists.</span>";
+			this.setMessage( "<span class='error'>Error - Country "+Region.getCountryCode()+" does not exists.</span>");
 		}catch (SQLException e) {
 			//Set the fail message if this region already exists
-			this.message = "<span class='error'>Error - "+Region.getCode()+" in "+Region.getCountryCode()+" already exists.</span>";
+			this.setMessage( "<span class='error'>Error - "+Region.getCode()+" in "+Region.getCountryCode()+" already exists.</span>");
+			//Check if there was any database connection error;
+			this.getDao().setErrormessageIfConnectionLost(e);
+			this.checkDatabaseConnectionErrors();
 			return;
 		}
 		
@@ -87,16 +87,18 @@ public class RegionController {
 	 * @return boolean - Whether the Region was deleted or not
 	 */
 	public boolean deleteRegion(Region Region) {
-		boolean del = this.dao.delete(Region);
+		boolean del = this.getDao().delete(Region);
 		// Delegate to dao
 		if (del) {
-			this.message = "<span class='success'>The Region was deleted.</span>";
+			this.setMessage( "<span class='success'>The Region was deleted.</span>");
 			// Remove from the current list as well. No need for reloading the whole list
 			// from the db
 			this.RegionList.remove(Region);
 		} else {
-			this.message = "<span class='error'>Error - Counld not delete.</span>";
+			this.setMessage( "<span class='error'>Error - Counld not delete.</span>");
 		}
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		return del;
 	}
 
@@ -109,14 +111,16 @@ public class RegionController {
 	 * @return boolean - Whether the Region was deleted or not
 	 */
 	public boolean updateRegion(Region Region) {
-		boolean upd = this.dao.update(Region);
+		boolean upd = this.getDao().update(Region);
 		// Delegate to dao
 		if (upd) {
-			this.message = "<span class='success'>The Region was updated.</span>";
+			this.setMessage( "<span class='success'>The Region was updated.</span>");
 			// Remove from the current list as well. No need for reloading the whole list
 		} else {
-			this.message = "<span class='error'>Error - Counld not update.</span>";
+			this.setMessage( "<span class='error'>Error - Counld not update.</span>");
 		}
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		return upd;
 	}
 
@@ -129,11 +133,13 @@ public class RegionController {
 	 */
 	public Region findRegion(String code) {
 		// Get the Region
-		Region Region = this.dao.find(code);
+		Region Region = this.getDao().find(code);
 		// Return the Region if it is not null
 		if (Region != null)
 			return Region;
-		this.message = "<span class='error'>Error - Counld not find " + code + ".</span>";
+		this.setMessage( "<span class='error'>Error - Counld not find " + code + ".</span>");
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		// Return an empty Region if it was not found
 		return new Region("","", "", "");
 	}
@@ -152,13 +158,4 @@ public class RegionController {
 	public Region getRegion() {
 		return Region;
 	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void clearMessage() {
-		this.message = "";
-	}
-
 }

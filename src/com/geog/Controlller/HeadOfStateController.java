@@ -11,14 +11,9 @@ import com.geog.Model.HeadOfState;
 
 @ManagedBean
 @SessionScoped
-public class HeadOfStateController {
-	// @EJB
-	// The HeadOfState data source Object
-	private HeadOfStateDAO dao;
+public class HeadOfStateController extends BasicController<HeadOfStateDAO> {
 	// The full list of countries
 	private List<HeadOfState> HeadOfStateList;
-	// Form message
-	private String message;
 	// Variable for HeadOfState update
 	private HeadOfState HeadOfState;
 
@@ -28,7 +23,7 @@ public class HeadOfStateController {
 	 */
 	public void init() {
 		// Initialise the HeadOfState dao
-		this.dao = new HeadOfStateDAO();
+		this.setDao(new HeadOfStateDAO());
 		// Load the HeadOfState list
 		this.loadHeadOfStateList();
 	}
@@ -38,7 +33,9 @@ public class HeadOfStateController {
 	 */
 	public void loadHeadOfStateList() {
 		// Load the HeadOfState list
-		this.HeadOfStateList = this.dao.list();
+		this.HeadOfStateList = this.getDao().list();
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 	}
 
 	/**
@@ -66,21 +63,26 @@ public class HeadOfStateController {
 			// Check if the country exists. 
 			if (cdao.find(HeadOfState.getCode())==null) {
 				// Set the fail message if the country does not exists
-				this.message = "<span class='error'>Error -  Country " + HeadOfState.getCode()+ " in  does not exists.</span>";
+				this.setMessage( "<span class='error'>Error -  Country " + HeadOfState.getCode()+ " in  does not exists.</span>");
 				//Dont go forward
 				return;
 			}
 
 			// Try to insert the HeadOfState
-			if (this.dao.insert(HeadOfState)) {
+			if (this.getDao().insert(HeadOfState)) {
 				// If it was successful
-				this.message = "<span class='success'>The HeadOfState was added.</span>";
+				this.setMessage( "<span class='success'>The HeadOfState was added.</span>");
 			}
 		} catch (MongoException e) {
 			e.printStackTrace();
 			// Set the fail message if this HeadOfState already exists
-			this.message = "<span class='error'>Error - Country " + HeadOfState.getCode() + " already has a head of state.</span>";
+			this.setMessage( "<span class='error'>Error - Country " + HeadOfState.getCode() + " already has a head of state.</span>");
+			//Check if it was a connection lost error
+			this.getDao().setErrormessageIfConnectionLost(e);
 		}
+		
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 
 	}
 
@@ -93,29 +95,23 @@ public class HeadOfStateController {
 	 * @return boolean - Whether the HeadOfState was deleted or not
 	 */
 	public boolean deleteHeadOfState(HeadOfState HeadOfState) {
-		boolean del = this.dao.delete(HeadOfState);
+		boolean del = this.getDao().delete(HeadOfState);
 		// Delegate to dao
 		if (del) {
-			this.message = "<span class='success'>The HeadOfState was deleted.</span>";
+			this.setMessage( "<span class='success'>The HeadOfState was deleted.</span>");
 			// Remove from the current list as well. No need for reloading the whole list
 			// from the db
 			this.HeadOfStateList.remove(HeadOfState);
 		} else {
-			this.message = "<span class='error'>Error - Counld not delete.</span>";
+			this.setMessage( "<span class='error'>Error - Counld not delete.</span>");
 		}
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		return del;
 	}
 
 	public HeadOfState getHeadOfState() {
 		return HeadOfState;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void clearMessage() {
-		this.message = "";
 	}
 
 }

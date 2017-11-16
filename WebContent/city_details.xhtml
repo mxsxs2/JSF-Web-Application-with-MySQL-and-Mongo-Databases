@@ -17,6 +17,8 @@
 <h:body>
 		<h:outputText value="#{cityController.message}"
 			class="ajaxResponseMessage" escape="false" />
+		
+	    #{cityController.clearMessage()}
 		<h:panelGrid columns="2">
 			<h:outputLabel for="citycode">City Code:</h:outputLabel>
 			<h:outputText value="#{cityController.city.code}" id="citycode"/>

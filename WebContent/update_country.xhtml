@@ -12,12 +12,13 @@
 </f:metadata>
 <h:head>
 	<title>Update Country</title>
-	#{countryController.clearMessage()}
+	
 </h:head>
 <h:body>
 	<h:form id="addform">
 		<h:outputText value="#{countryController.message}"
 			class="ajaxResponseMessage" escape="false" />
+			#{countryController.clearMessage()}
 		<h:panelGrid columns="2">
 			<h:outputLabel for="code">Code:</h:outputLabel>
 			<h:inputText value="#{countryController.country.code}" id="code"

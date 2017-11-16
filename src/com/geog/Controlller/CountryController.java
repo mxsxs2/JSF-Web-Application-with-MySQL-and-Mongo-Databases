@@ -10,14 +10,9 @@ import com.geog.Model.Country;
 
 @ManagedBean
 @SessionScoped
-public class CountryController {
-	// @EJB
-	// The country data source Object
-	private CountryDAO dao;
+public class CountryController extends BasicController<CountryDAO> {
 	// The full list of countries
 	private List<Country> countryList;
-	// Form message
-	private String message;
 	// Variable for country update
 	private Country country;
 
@@ -27,7 +22,7 @@ public class CountryController {
 	 */
 	public void init() {
 		// Initialise the country dao
-		this.dao = new CountryDAO();
+		this.setDao(new CountryDAO());
 		// Load the country list
 		this.loadCountryList();
 	}
@@ -37,7 +32,9 @@ public class CountryController {
 	 */
 	public void loadCountryList() {
 		// Load the country list
-		this.countryList = this.dao.list();
+		this.countryList = this.getDao().list();
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 	}
 
 	/**
@@ -59,11 +56,14 @@ public class CountryController {
 	 */
 	public void addCountry(Country country) {
 		// Delegate to dao
-		if (this.dao.insert(country)) {
-			this.message = "<span class='success'>The Country was added.</span>";
+		if (this.getDao().insert(country)) {
+			this.setMessage( "<span class='success'>The Country was added.</span>");
 		} else {
-			this.message = "<span class='error'>Error - Country code "+country.getCode()+" already exists.</span>";
+			this.setMessage( "<span class='error'>Error - Country code "+country.getCode()+" already exists.</span>");
+			//Check if there was any database connection error;
+			this.checkDatabaseConnectionErrors();
 		}
+		
 	}
 
 	/**
@@ -75,16 +75,20 @@ public class CountryController {
 	 * @return boolean - Whether the country was deleted or not
 	 */
 	public boolean deleteCountry(Country country) {
-		boolean del = this.dao.delete(country);
+		boolean del = this.getDao().delete(country);
 		// Delegate to dao
 		if (del) {
-			this.message = "<span class='success'>The Country was deleted.</span>";
-			// Remove from the current list as well. No need for reloading the whole list
-			// from the db
+			this.setMessage( "<span class='success'>The Country was deleted.</span>");
+			// Remove from the current list as well. No need for reloading the whole list from the db
 			this.countryList.remove(country);
 		} else {
-			this.message = "<span class='error'>Error - Counld not delete.</span>";
+			this.setMessage( "<span class='error'>Error - Counld not delete.</span>");
 		}
+		
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
+		
+		
 		return del;
 	}
 
@@ -97,13 +101,15 @@ public class CountryController {
 	 * @return boolean - Whether the country was deleted or not
 	 */
 	public boolean updateCountry(Country country) {
-		boolean upd = this.dao.update(country);
+		boolean upd = this.getDao().update(country);
 		// Delegate to dao
 		if (upd) {
-			this.message = "<span class='success'>The Country was updated.</span>";
+			this.setMessage( "<span class='success'>The Country was updated.</span>");
 			// Remove from the current list as well. No need for reloading the whole list
 		} else {
-			this.message = "<span class='error'>Error - Counld not update.</span>";
+			this.setMessage( "<span class='error'>Error - Counld not update.</span>");
+			//Check if there was any database connection error;
+			this.checkDatabaseConnectionErrors();
 		}
 		return upd;
 	}
@@ -117,11 +123,12 @@ public class CountryController {
 	 */
 	public Country findCountry(String code) {
 		// Get the country
-		Country country = this.dao.find(code);
+		Country country = this.getDao().find(code);
 		// Return the country if it is not null
-		if (country != null)
-			return country;
-		this.message = "<span class='error'>Error - Counld not find " + code + ".</span>";
+		if (country != null) return country;
+		this.setMessage( "<span class='error'>Error - Counld not find " + code + ".</span>");
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 		// Return an empty country if it was not found
 		return new Country("", "", "");
 	}
@@ -140,13 +147,4 @@ public class CountryController {
 	public Country getCountry() {
 		return country;
 	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void clearMessage() {
-		this.message = "";
-	}
-
 }

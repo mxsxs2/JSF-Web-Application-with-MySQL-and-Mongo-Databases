@@ -12,13 +12,10 @@ import com.geog.Model.CitySearch;
 
 @ManagedBean
 @SessionScoped
-public class FindCitiesController {
-	// The City data source Object
-	private CityDAO dao;
+public class FindCitiesController extends BasicController<CityDAO>{
+
 	// The full list of countries
 	private List<City> CityList;
-	// Form message
-	private String message;
 
 	// Model for the search
 	private CitySearch citySearch;
@@ -30,7 +27,7 @@ public class FindCitiesController {
 	 */
 	public void init() {
 		// Initialise the City dao
-		this.dao = new CityDAO();
+		this.setDao(new CityDAO());
 		// Load the City list
 		this.loadCityList();
 		//Create the city search object if it is empty
@@ -42,7 +39,9 @@ public class FindCitiesController {
 	 */
 	public void loadCityList() {
 		// Load the City list
-		this.CityList = this.dao.list();
+		this.CityList = this.getDao().list();
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 	}	
 	
 	/**
@@ -50,7 +49,9 @@ public class FindCitiesController {
 	 */
 	public void loadSearchedCityList() {
 		// Load the City list
-		this.CityList = this.dao.listSearch(this.citySearch);
+		this.CityList = this.getDao().listSearch(this.citySearch);
+		//Check if there was any database connection error;
+		this.checkDatabaseConnectionErrors();
 	}
 
 	/**
@@ -60,17 +61,6 @@ public class FindCitiesController {
 	 */
 	public List<City> getCityList() {
 		return this.CityList;
-	}
-	/**
-	 * Returns a message from the controller or from the DAO
-	 * @return String - message
-	 */
-	public String getMessage() {
-		return message;
-	}
-	
-	public void clearMessage() {
-		this.message = "";
 	}
 
 	public CitySearch getCitySearch() {

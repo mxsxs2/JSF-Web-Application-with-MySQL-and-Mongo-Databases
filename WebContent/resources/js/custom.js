@@ -15,10 +15,10 @@ $(document).ready(function() {
 	setUpDialogButtonListener("Add Country","add_country.xhtml",'#addcountrybutton');
 
 	// Add update country button listener
-	setUpDialogButtonListener("Update Country","update_country.xhtml?code="+$(this).attr("accesskey"),'.updatecountrybutton');
+	setUpDialogButtonListener("Update Country","update_country.xhtml?code=",'.updatecountrybutton',"accesskey");
 
 	// Add city details button listener
-	setUpDialogButtonListener("City Details","city_details.xhtml?code="+$(this).attr("accesskey"),'.citydetailsbutton');
+	setUpDialogButtonListener("City Details","city_details.xhtml?code=",'.citydetailsbutton',"accesskey");
 	
 	//Set up every country delete button
 	setUpDeleteButtonListeners("Delete Country",'.deletecountrybutton');
@@ -34,11 +34,18 @@ $(document).ready(function() {
 });
 
 //Function used to load the dialog content and open it
-function setUpDialogButtonListener(title,page,selector){
+function setUpDialogButtonListener(title,page,selector,data){
+	
 	// Add button listener
 	$('body').on('click', selector, function() {
+		var loadurl=page;
+		//Append data to the end of the page link if it is neccessary
+		if(typeof data !='undefined'){
+			//Get the data attribute
+			var loadurl=page+$(this).attr(data);
+		}
 		//Load the content of the file into a hidden container
-		$("#dialog").load(page,function(){
+		$("#dialog").load(loadurl,function(){
 			//When the loading finished convert the container into a dialog box and show it
 			$("#dialog").dialog({
 				title: title,

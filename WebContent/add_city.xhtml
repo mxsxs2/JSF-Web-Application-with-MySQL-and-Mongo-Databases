@@ -7,12 +7,12 @@
 
 <h:head>
 	<title>Add City</title>
-	#{cityController.clearMessage()}
 </h:head>
 <h:body>
 	<h:form id="addcityform">
 		<h:outputText value="#{cityController.message}"
 			class="ajaxResponseMessage" escape="false" />
+	    #{cityController.clearMessage()}
 		<h:panelGrid columns="2">
 			<h:outputLabel for="citycode">City Code:</h:outputLabel>
 			<h:inputText value="#{city.code}" id="citycode" required="true"
@@ -41,10 +41,8 @@
 				p:maxlength="10"></h:inputText>
 			<h:outputLabel for="coastal">By The Sea:</h:outputLabel>
 			<h:selectOneMenu value="#{city.coastal}" id="coastal">
-				<f:selectItem itemValue="true"
-					itemLabel="True" />
-				<f:selectItem itemValue="false"
-					itemLabel="False" />
+				<f:selectItem itemValue="true" itemLabel="True" />
+				<f:selectItem itemValue="false" itemLabel="False" />
 			</h:selectOneMenu>
 			<h:outputLabel for="areakm">Area(KM):</h:outputLabel>
 			<h:inputText value="#{city.areaKM}" id="areakm" p:maxlength="20"></h:inputText>

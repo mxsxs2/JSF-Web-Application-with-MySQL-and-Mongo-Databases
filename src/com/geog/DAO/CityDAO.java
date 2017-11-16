@@ -44,6 +44,8 @@ public class CityDAO extends DAOFactory<City> {
 				list.add(City);
 			}
 		} catch (SQLException e) {
+			//Check if it was a connection lost error
+			this.setErrormessageIfConnectionLost(e);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -75,6 +77,8 @@ public class CityDAO extends DAOFactory<City> {
 				return City;
 			}
 		} catch (SQLException e) {
+			//Check if it was a connection lost error
+			this.setErrormessageIfConnectionLost(e);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -115,6 +119,8 @@ public class CityDAO extends DAOFactory<City> {
 				// Run the update and return the result
 				return 1 == ps.executeUpdate();
 			} catch (SQLException e) {
+				//Check if it was a connection lost error
+				this.setErrormessageIfConnectionLost(e);
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -240,6 +246,8 @@ public class CityDAO extends DAOFactory<City> {
 				list.add(City);
 			}
 		} catch (SQLException e) {
+			//Check if it was a connection lost error
+			this.setErrormessageIfConnectionLost(e);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
