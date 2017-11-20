@@ -47,7 +47,8 @@ The application is devided into four parts, each part has it's own:
 
 #### View
 The view is built with Bootstrap css and aid of jQuery. jQuery is used to load the add, update and details pages into the view(more precisely into a jQuery modal) through AJAX. If add or update page is loaded into the view, the information is being sent back through JSF ajax to the appropriate controller. jQuery is also used to show a confirmation dialog before deleting an item.
-
+#### Find Cities View
+At first load the view shows every single city from the database. Once the "Search" button is pressed it filters the result according to the filter criteria. If a field is left empty, it is going to be ignored. 
 
 
 
