@@ -2,8 +2,8 @@
 The application is written for Data Centric Rad module in year 3 of Software Development(2017) course at Galway Mayo Institute of Technology, Galway Campus.
 This is a Java Server Faces application with MySQL Database and Mongo Database.
 ### Features of the application:
-* Connect to MySQL Database and read/modify/insert records
-* Connect to Mongo Database and read/modify/insert documents
+* Connect to MySQL Database and read/modify/insert records(Intentionally left the printStackTrace() methods for easier debugging)
+* Connect to Mongo Database and read/modify/insert documents(Intentionally left the printStackTrace() methods for easier debugging)
 * Show a list of
     * Countries
     * Regions
@@ -33,7 +33,7 @@ This is a Java Server Faces application with MySQL Database and Mongo Database.
 
 ### Description
 #### How it works
-The application is devided into four parts, each part has it's own:
+The application is divided into four parts, each part has it's own:
 * Controller
     * Each controller extends a BasicController abstract class. This class implements "messaging" between the view and controller. On every view load the view shows the current message from the controller then calls the ```clearMessage()``` method.  BasicController also implements a method to check the database connection lost flags in the DAO, if the connection was lost it will set the error message. 
 * Data Access Object
